@@ -29,9 +29,7 @@ namespace HttpLoggerMiddleware.Messages
         /// </summary>
         private dynamic GetHeaders()
         {
-            return _headers
-                .ToDictionary(h => h.Key, h => h.Value.ToString())
-                .ToJson();
+            return _headers.ToDict().ToJson();
         }
 
         /// <summary>
