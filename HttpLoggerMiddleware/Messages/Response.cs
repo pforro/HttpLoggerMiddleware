@@ -2,14 +2,17 @@
 
 namespace HttpLoggerMiddleware.Messages
 {
-    internal class Response : MessageBase
+    /// <summary>
+    /// Represent an HTTP Response
+    /// </summary>
+    internal sealed class Response : MessageBase
     {
         private readonly Stream _originalBody;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public Response(HttpResponse response) : base(response, response.Headers)
+        internal Response(HttpResponse response) : base(response, response.Headers)
         {
             _originalBody = response.Body;
             response.Body = new MemoryStream();

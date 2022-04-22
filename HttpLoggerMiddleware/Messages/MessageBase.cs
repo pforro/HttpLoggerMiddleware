@@ -3,7 +3,7 @@
 namespace HttpLoggerMiddleware.Messages
 {
     /// <summary>
-    /// Represents the Body of an HTTP message
+    /// Abstract base class that represent an HTTP Message
     /// </summary>
     internal abstract class MessageBase
     {

@@ -6,9 +6,9 @@ using HttpLoggerMiddleware.Messages;
 namespace HttpLoggerMiddleware
 {
     /// <summary>
-    /// Middleware that is responsible for logging (into file) all the incoming requests
+    /// Middleware that is responsible for logging (into a json file) all the incoming requests
     /// and outgoing responses
-    /// (HEAD, BODY)
+    /// (TimeStamp, Route, Method, QueryParameters, Headers, Payload)
     /// </summary>
     internal class HttpLoggerMiddleware
     {
@@ -24,7 +24,8 @@ namespace HttpLoggerMiddleware
         }
 
         /// <summary>
-        /// 
+        /// Main entry point of the Middleware
+        /// Called by .NET request pipeline
         /// </summary>
         public async Task InvokeAsync(HttpContext context)
         {

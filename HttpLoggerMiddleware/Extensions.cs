@@ -5,12 +5,12 @@ using Microsoft.AspNetCore.Builder;
 namespace HttpLoggerMiddleware
 {
     /// <summary>
-    /// 
+    /// Static Utility class that provides extension methods
     /// </summary>
     public static class Extensions
     {
         /// <summary>
-        /// 
+        /// Adds the HttpLoggerMiddleaware to the .NET request pipeline
         /// </summary>
         public static IApplicationBuilder UseHttpLogger(
             this IApplicationBuilder builder)

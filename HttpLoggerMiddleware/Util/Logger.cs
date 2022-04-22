@@ -3,6 +3,10 @@ using Newtonsoft.Json;
 
 namespace HttpLoggerMiddleware.Util
 {
+    /// <summary>
+    /// Default thread-safe logger of the Middleware
+    /// Responsible for writing the log.json file
+    /// </summary>
     internal class Logger
     {
         private static readonly string _logDirPath = Path.Combine(
@@ -15,7 +19,7 @@ namespace HttpLoggerMiddleware.Util
             path2: "log.json"
         );
 
-        private static List<dynamic> Logs { get; set; }
+        private static List<dynamic> _logs;
 
         protected readonly ReaderWriterLockSlim _lock =
             new ReaderWriterLockSlim();
@@ -23,7 +27,6 @@ namespace HttpLoggerMiddleware.Util
         /// <summary>
         /// Constructor
         /// </summary>
-
         internal Logger()
         {
             Initialize();
@@ -41,30 +44,30 @@ namespace HttpLoggerMiddleware.Util
             {
                 var json = File.ReadAllText(_logFilePath);
 
-                Logs = JsonConvert.
+                _logs = JsonConvert.
                     DeserializeObject<List<dynamic>>(json);
             }
             catch
             {
-                Logs = new List<dynamic>();
+                _logs = new List<dynamic>();
             }
         }
 
         /// <summary>
-        /// Log
+        /// Records the request-response pair into the log.json file
         /// </summary>
         internal Task Log(dynamic item)
         {
             return Task.Run(() =>
             {
-                Logs.Add(item);
+                _logs.Add(item);
 
                 _lock.EnterWriteLock();
 
                 try
                 {
                     var json = JsonConvert
-                        .SerializeObject(Logs, Formatting.Indented);
+                        .SerializeObject(_logs, Formatting.Indented);
 
                     File.WriteAllText(_logFilePath, json);
                 }

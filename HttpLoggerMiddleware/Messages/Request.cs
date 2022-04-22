@@ -2,7 +2,10 @@
 
 namespace HttpLoggerMiddleware.Messages
 {
-    internal class Request : MessageBase
+    /// <summary>
+    /// Represents an HTTP Request
+    /// </summary>
+    internal sealed class Request : MessageBase
     {
         /// <summary>
         /// Constructor
